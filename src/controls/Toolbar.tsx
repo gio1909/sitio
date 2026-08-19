@@ -27,7 +27,7 @@ export function Toolbar() {
       resetToAerialView(viewer);
     } else {
       setViewMode("house");
-      flyToHouseView(viewer, house);
+      void flyToHouseView(viewer, house);
     }
   };
 

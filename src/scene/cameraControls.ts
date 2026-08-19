@@ -1,6 +1,7 @@
 import * as Cesium from "cesium";
 import type { HouseTransform } from "../types/geo";
 import { DEFAULT_AERIAL_HEIGHT, EYE_HEIGHT_M, SITE_REFERENCE } from "../utils/constants";
+import { sampleGroundHeightPrecise } from "../utils/geoConversion";
 
 /** Voa a câmera para a visão aérea inicial, centrada no ponto de referência do sítio. */
 export function flyToSite(viewer: Cesium.Viewer, durationSeconds = 2): void {
@@ -25,12 +26,22 @@ export function flyToSite(viewer: Cesium.Viewer, durationSeconds = 2): void {
  * O usuário continua livre para olhar ao redor com o mouse (controles
  * padrão do Cesium continuam ativos nesse modo).
  */
-export function flyToHouseView(
+export async function flyToHouseView(
   viewer: Cesium.Viewer,
   house: HouseTransform,
   durationSeconds = 1.5,
-): void {
-  const eyeHeight = house.position.height + EYE_HEIGHT_M;
+): Promise<void> {
+  // Reamostra a elevação com o tile de terreno mais detalhado disponível:
+  // a câmera fica muito perto do chão aqui, e o LOD já carregado (usado no
+  // resto da aplicação, mais rápido) pode divergir o suficiente da malha
+  // realmente renderizada para deixar a câmera "enterrada".
+  const preciseGround = await sampleGroundHeightPrecise(
+    viewer,
+    house.position.longitude,
+    house.position.latitude,
+  );
+  const groundHeight = preciseGround ?? house.position.height;
+  const eyeHeight = groundHeight + EYE_HEIGHT_M;
   const destination = Cesium.Cartesian3.fromDegrees(
     house.position.longitude,
     house.position.latitude,

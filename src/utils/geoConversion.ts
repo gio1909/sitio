@@ -83,3 +83,30 @@ export function sampleGroundHeight(
   const height = viewer.scene.globe.getHeight(cartographic);
   return height ?? null;
 }
+
+/**
+ * Versão precisa (assíncrona) de sampleGroundHeight: força o download do
+ * tile de terreno mais detalhado disponível para aquele ponto, em vez de
+ * usar o LOD que já estiver carregado em memória.
+ *
+ * Necessário para a "Vista da Casa": a câmera fica muito perto do chão, e
+ * um LOD de terreno mais grosseiro (usado pela versão síncrona) pode
+ * divergir o suficiente da malha realmente renderizada para colocar a
+ * câmera "dentro" do terreno — o Cesium então desenha a cor de subsolo
+ * (undergroundColor) em vez da cena, como se estivéssemos debaixo do chão.
+ */
+export async function sampleGroundHeightPrecise(
+  viewer: Cesium.Viewer,
+  longitude: number,
+  latitude: number,
+): Promise<number | null> {
+  try {
+    const [result] = await Cesium.sampleTerrainMostDetailed(
+      viewer.terrainProvider,
+      [Cesium.Cartographic.fromDegrees(longitude, latitude)],
+    );
+    return result.height ?? null;
+  } catch {
+    return sampleGroundHeight(viewer, longitude, latitude);
+  }
+}
