@@ -40,6 +40,7 @@ export function Toolbar() {
   const handleCenterSite = () => {
     if (!viewer) return;
     setViewMode("aerial");
+    viewer.scene.globe.depthTestAgainstTerrain = true;
     flyToSite(viewer);
   };
 
