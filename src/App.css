@@ -1,0 +1,212 @@
+.app-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.cesium-container {
+  position: absolute;
+  inset: 0;
+}
+
+/* Esconde o widget de créditos padrão da Cesium (mantém a licença exigida,
+   mas remove a barra visual, para uma interface mais limpa). Créditos ainda
+   são consultáveis pelo botão de logo do Cesium. */
+.cesium-viewer-bottom {
+  transform: scale(0.85);
+  transform-origin: bottom left;
+  opacity: 0.75;
+}
+
+.toolbar {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: rgba(18, 21, 26, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  z-index: 10;
+}
+
+.toolbar-sep {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 0 2px;
+}
+
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.06);
+  color: #eef1f4;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.toolbar-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.toolbar-btn.active {
+  background: #3c7dfa;
+  border-color: #6fa0ff;
+}
+
+.toolbar-btn.subtle {
+  opacity: 0.75;
+  font-size: 12.5px;
+}
+
+.toolbar-btn.danger:hover:not(:disabled) {
+  background: rgba(255, 80, 60, 0.25);
+}
+
+.toolbar-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.house-panel {
+  position: absolute;
+  top: 84px;
+  right: 16px;
+  width: 260px;
+  padding: 16px;
+  background: rgba(18, 21, 26, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  z-index: 10;
+}
+
+.house-panel h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #b9c2cc;
+  text-transform: uppercase;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.field-group:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 12.5px;
+  color: #aab3bd;
+}
+
+.field-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+.field-input-wrap input {
+  width: 84px;
+  background: transparent;
+  border: none;
+  color: #eef1f4;
+  font-size: 13px;
+  text-align: right;
+  outline: none;
+}
+
+.field-unit {
+  font-size: 11.5px;
+  color: #8b95a1;
+}
+
+.rotation-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.rotation-buttons button {
+  flex: 1;
+  padding: 6px 0;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  color: #eef1f4;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.rotation-buttons button:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0b0d10;
+  z-index: 20;
+}
+
+.loading-card {
+  padding: 14px 22px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 14px;
+}
+
+.token-warning {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 640px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: rgba(200, 120, 20, 0.18);
+  border: 1px solid rgba(255, 170, 60, 0.4);
+  color: #ffd9a3;
+  font-size: 12.5px;
+  line-height: 1.5;
+  z-index: 10;
+  text-align: center;
+}
