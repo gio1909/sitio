@@ -115,7 +115,12 @@ export function CesiumViewer() {
       useSceneStore.getState().setTerrainReady(true);
     }
 
-    void init();
+    init().catch((error: unknown) => {
+      console.error("Falha ao inicializar o Cesium:", error);
+      useSceneStore.getState().setInitError(
+        error instanceof Error ? error.message : String(error),
+      );
+    });
 
     return () => {
       cancelled = true;

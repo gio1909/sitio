@@ -12,18 +12,23 @@ interface SceneState {
   /** true = próximo clique no terreno posiciona/reposiciona a casa. */
   isPlacingHouse: boolean;
   isTerrainReady: boolean;
+  /** Mensagem de erro se a inicialização do Cesium falhar (mostrada na UI em vez de travar). */
+  initError: string | null;
 
   setViewer: (viewer: Cesium.Viewer | null) => void;
   setPlacingHouse: (placing: boolean) => void;
   setTerrainReady: (ready: boolean) => void;
+  setInitError: (message: string | null) => void;
 }
 
 export const useSceneStore = create<SceneState>((set) => ({
   viewer: null,
   isPlacingHouse: false,
   isTerrainReady: false,
+  initError: null,
 
   setViewer: (viewer) => set({ viewer }),
   setPlacingHouse: (placing) => set({ isPlacingHouse: placing }),
   setTerrainReady: (ready) => set({ isTerrainReady: ready }),
+  setInitError: (message) => set({ initError: message }),
 }));

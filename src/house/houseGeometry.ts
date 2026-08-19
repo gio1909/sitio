@@ -13,8 +13,12 @@ import type { HouseDimensions } from "../types/geo";
 
 const ROOF_RIDGE_HEIGHT = 1.6; // metros acima do topo da parede
 const ROOF_OVERHANG = 0.4; // metros de beiral além da parede, no eixo Y (comprimento)
-const WALL_COLOR = Cesium.Color.fromCssColorString("#e8dcc8");
-const ROOF_COLOR = Cesium.Color.fromCssColorString("#8a4a3a");
+// Cores calculadas dentro das funções (não no topo do módulo): no build de
+// produção o Cesium é carregado como script externo (window.Cesium) e
+// avaliar Cesium.Color no momento em que este módulo é importado pode
+// rodar antes desse script terminar de carregar.
+const WALL_COLOR = () => Cesium.Color.fromCssColorString("#e8dcc8");
+const ROOF_COLOR = () => Cesium.Color.fromCssColorString("#8a4a3a");
 
 function buildWallsInstance(dim: HouseDimensions): Cesium.GeometryInstance {
   const box = Cesium.BoxGeometry.fromDimensions({
@@ -28,7 +32,7 @@ function buildWallsInstance(dim: HouseDimensions): Cesium.GeometryInstance {
       new Cesium.Cartesian3(0, 0, dim.height / 2),
     ),
     attributes: {
-      color: Cesium.ColorGeometryInstanceAttribute.fromColor(WALL_COLOR),
+      color: Cesium.ColorGeometryInstanceAttribute.fromColor(WALL_COLOR()),
     },
   });
 }
@@ -84,7 +88,7 @@ function buildRoofInstance(dim: HouseDimensions): Cesium.GeometryInstance {
   return new Cesium.GeometryInstance({
     geometry,
     attributes: {
-      color: Cesium.ColorGeometryInstanceAttribute.fromColor(ROOF_COLOR),
+      color: Cesium.ColorGeometryInstanceAttribute.fromColor(ROOF_COLOR()),
     },
   });
 }
