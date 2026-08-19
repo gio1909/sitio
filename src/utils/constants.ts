@@ -25,5 +25,9 @@ export const DEFAULT_HOUSE_DIMENSIONS: HouseDimensions = {
   height: 3,
 };
 
-/** Caminho onde um modelo GLB real pode ser colocado futuramente. */
-export const HOUSE_GLB_URL = "/models/house.glb";
+/**
+ * Caminho onde um modelo GLB real pode ser colocado futuramente.
+ * Usa BASE_URL (não "/") para funcionar tanto em dev quanto atrás do
+ * subcaminho do GitHub Pages (ex.: /sitio/models/house.glb).
+ */
+export const HOUSE_GLB_URL = `${import.meta.env.BASE_URL}models/house.glb`;
